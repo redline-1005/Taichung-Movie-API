@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    
+    env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
       
     steps:
       - name: 1. 複製倉庫程式碼到雲端虛擬機
