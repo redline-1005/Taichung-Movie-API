@@ -19,7 +19,7 @@ jobs:
       - name: 2. 設定 Python 環境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: 3. 安裝 Python 核心相依套件
         run: |
