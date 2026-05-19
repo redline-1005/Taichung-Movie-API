@@ -36,6 +36,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Robot"
-          git add database.db
+          git add movie_database.db
           git commit -m "chore: 雲端機器人自動更新今日電影時刻表" || echo "今日資料無變動，跳過更新"
           git push
