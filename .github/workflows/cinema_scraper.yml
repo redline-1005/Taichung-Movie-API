@@ -1,16 +1,16 @@
+# cinema_scraper.yml
 name: 大台中電影時刻表每日自動爬取
 
 on:
   schedule:
-    # 每天台灣時間早上 06:00 自動執行 (UTC 時間為 22:00)
     - cron: '0 22 * * *'
-  workflow_dispatch: # 允許隨時手動到 GitHub 網頁上點擊執行測試
+  workflow_dispatch:
 
 jobs:
   auto_scrape:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 給予寫入權限，機器人才能把更新後的 database.db 推回倉庫
+      contents: write
       
     steps:
       - name: 1. 複製倉庫程式碼到雲端虛擬機
