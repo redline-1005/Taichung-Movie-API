@@ -1,5 +1,4 @@
-# cinema_scraper.yml
-name: 大台中電影時刻表每日自動爬取
+name: 台中電影時刻表每日自動爬取
 
 on:
   schedule:
@@ -11,31 +10,31 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
-      - name: 1. 複製倉庫程式碼到雲端虛擬機
+      - name: 取得最新程式碼
         uses: actions/checkout@v4
 
-      - name: 2. 設定 Python 環境
+      - name: 設定 Python 環境
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: 3. 安裝 Python 核心相依套件
+      - name: 安裝套件
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 4. 安裝 Playwright 瀏覽器核心 (威秀、秀泰必備)
-        run: npx playwright install chromium
+      - name: 安裝 Playwright 瀏覽器
+        run: python -m playwright install chromium
 
-      - name: 5. 點火執行總調度爬蟲 🚀
+      - name: 執行爬蟲
         run: python main_scraper.py
 
-      - name: 6. 自動將最新的 database.db 成果推回 GitHub 🎯
+      - name: 推送更新後的資料庫到 GitHub
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Robot"
           git add movie_database.db
-          git commit -m "chore: 雲端機器人自動更新今日電影時刻表" || echo "今日資料無變動，跳過更新"
+          git commit -m "chore: 自動更新場次資料庫" || echo "無變更，略過 commit"
           git push
