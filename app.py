@@ -80,6 +80,8 @@ if search_btn or "results" not in st.session_state:
 
         if dt.date() != selected_date:
             continue
+        if selected_date == date.today() and dt < datetime.now():
+            continue
         if selected_format != "全部" and selected_format.upper() not in s["format_type"].upper():
             continue
         if selected_language != "全部" and selected_language not in s["language"]:
