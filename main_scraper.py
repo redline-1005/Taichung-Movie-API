@@ -1,4 +1,5 @@
 # main_scraper.py
+import re
 from sqlmodel import Session, delete
 from database import engine
 from models import Showtime
@@ -25,6 +26,17 @@ THEATER_SCRAPER_MAP = [
     ("台中麗寶秀泰影城",         ShowtimeScraper),
 ]
 
+
+def normalize_movie_name(name: str) -> str:
+    name = name.replace("：", ":").replace("∶", ":")
+    name = re.sub(r'\s*:\s*', ": ", name)
+    name = name.replace("_", " ")
+    name = re.sub(r'\s*-([^-]+)-\s*', r' \1', name)
+    name = name.replace("Ⅱ", "II").replace("Ⅰ", "I").replace("Ⅲ", "III")
+    name = re.sub(r'\s+', ' ', name).strip()
+    return name
+
+
 def update_all_taichung_showtimes():
     print("開始更新台中場次資料")
 
@@ -41,6 +53,7 @@ def update_all_taichung_showtimes():
 
                 for s_data in scraper.showtime_results:
                     s_data["theater_name"] = theater_name
+                    s_data["movie_name"] = normalize_movie_name(s_data["movie_name"])
                     session.add(Showtime(**s_data))
 
                 session.commit()
@@ -51,6 +64,7 @@ def update_all_taichung_showtimes():
                 session.rollback()
 
     print("所有影城更新完畢")
+
 
 if __name__ == "__main__":
     update_all_taichung_showtimes()
