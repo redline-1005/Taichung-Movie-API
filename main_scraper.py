@@ -35,6 +35,8 @@ def normalize_movie_name(name: str) -> str:
     name = name.replace("Ⅱ", "II").replace("Ⅰ", "I").replace("Ⅲ", "III")
     name = re.sub(r'([\u4e00-\u9fff])(\d)', r'\1 \2', name)
     name = re.sub(r'([\u4e00-\u9fff])([A-Za-z])', r'\1 \2', name)
+    name = re.sub(r'(\d)([\u4e00-\u9fff])', r'\1 \2', name)
+    name = re.sub(r'([A-Za-z])([\u4e00-\u9fff])', r'\1 \2', name)
     name = re.sub(r'\s+', ' ', name).strip()
     return name
 
