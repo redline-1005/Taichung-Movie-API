@@ -14,7 +14,7 @@ class In89Scraper(BaseMovieScraper):
 
     def fetch_showtimes(self, theater_name):
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=False)
+            browser = p.chromium.launch(headless=True)
             page = browser.new_page()
 
             try:

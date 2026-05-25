@@ -13,8 +13,11 @@ THEATER_VALUE_MAP = {
 API_BASE = "https://www.vscinemas.com.tw/api"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     "Referer": "https://www.vscinemas.com.tw/vsweb/",
+    "Accept": "application/json, text/javascript, */*; q=0.01",
+    "Accept-Language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "X-Requested-With": "XMLHttpRequest",
 }
 
 class VieshowScraper(BaseMovieScraper):
