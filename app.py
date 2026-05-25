@@ -1,7 +1,7 @@
 # app.py
 import streamlit as st
 import requests
-from datetime import datetime, date
+from datetime import datetime, date, timezone, timedelta
 
 API_BASE = "https://taichung-movie-api.onrender.com/api"
 
@@ -77,7 +77,8 @@ if search_btn or "results" not in st.session_state:
             dt = datetime.fromisoformat(s["date_time"])
         except Exception:
             continue
-
+        
+        now_tw = datetime.now(timezone(timedelta(hours=8))).replace(tzinfo=None)
         if dt.date() != selected_date:
             continue
         if selected_date == date.today() and dt < datetime.now():
