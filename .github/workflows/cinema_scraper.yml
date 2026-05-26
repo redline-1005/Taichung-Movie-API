@@ -41,3 +41,10 @@ jobs:
           git add movie_database.db
           git commit -m "chore: 自動更新場次資料庫" || echo "無變更，略過 commit"
           git push
+      
+      - name: 上傳診斷截圖
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-screenshots
+          path: "*.png"

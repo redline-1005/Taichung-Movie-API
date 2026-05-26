@@ -47,6 +47,8 @@ class VieshowScraper(BaseMovieScraper):
                 page.goto(f"{self.base_url}/vsweb/", wait_until="networkidle", timeout=60000)
                 page.wait_for_timeout(3000)
 
+                page.screenshot(path="vieshow_debug.png")
+                
                 # 選取影城
                 cinema_sel = page.locator("select[name='cinema']")
                 if cinema_sel.count() == 0:
