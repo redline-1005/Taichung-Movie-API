@@ -79,6 +79,24 @@ all_showtimes_data = fetch_all_showtimes()
 popular_movies = get_popular_movies(all_showtimes_data)
 
 st.title("🎬 台中電影場次整合查詢")
+with st.expander("📖 使用說明", expanded=False):
+    st.markdown("""
+    **本網站整合台中 11 間電影院場次資訊，提供快速查詢服務。**
+    
+    **🎞 熱映中**
+    - 點選電影海報可查看電影簡介與各影城場次
+    - 點選影城名稱連結可前往官網訂票
+    
+    **🔍 篩選條件（左側）**
+    - 可依電影名稱、影城、日期、播放格式、語言進行篩選
+    - 點選「查詢」後顯示符合條件的場次，搜尋結果於右側頁面的最下方
+    - 使用建議：篩選條件勿加太多，容易沒有符合場次
+    
+    **⚠️ 注意事項**
+    - 威秀影城（大遠百、老虎城、新時代）場次資料為手動更新，可能略有延遲
+    - 新光影城官網偶有不穩定情況
+    - 場次資料每日早上 6:00 自動更新
+    """)
 
 if popular_movies:
     st.subheader("🎞 熱映中")
