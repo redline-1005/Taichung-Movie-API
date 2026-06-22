@@ -60,9 +60,7 @@ def fetch_tmdb_info(movie_name):
     return None
 
 # --- 計算熱門電影（出現影城數 >= 2 或場次數 >= 5）---
-@st.cache_data(ttl=3600)
-def get_popular_movies():
-    all_showtimes = fetch_all_showtimes()
+def get_popular_movies(all_showtimes):
     from collections import defaultdict
     theater_count = defaultdict(set)
     show_count = defaultdict(int)
@@ -79,7 +77,8 @@ def get_popular_movies():
 movie_list = fetch_movies()
 theater_data = fetch_theaters()
 theater_names = ["全部"] + [t["name"] for t in theater_data]
-popular_movies = get_popular_movies()
+all_showtimes_data = fetch_all_showtimes()
+popular_movies = get_popular_movies(all_showtimes_data)
 st.write(f"DEBUG: popular_movies 數量 = {len(popular_movies)}")
 
 # --- Gallery ---
@@ -163,7 +162,7 @@ if popular_movies:
                 if info["overview"]:
                     st.write(info["overview"])
             # 顯示今日場次數
-            all_showtimes = fetch_all_showtimes()
+            all_showtimes = all_showtimes_data
             today_tw = datetime.now(TW_TZ).date()
             today_shows = [
                 s for s in all_showtimes
