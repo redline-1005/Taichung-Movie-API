@@ -11,7 +11,7 @@ TW_TZ = timezone(timedelta(hours=8))
 st.set_page_config(page_title="台中電影場次查詢", page_icon="🎬", layout="wide")
 
 # --- 取得基礎資料 ---
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=300)
 def fetch_movies():
     try:
         r = requests.get(f"{API_BASE}/movies", timeout=10)
@@ -77,6 +77,7 @@ movie_list = fetch_movies()
 theater_data = fetch_theaters()
 theater_names = ["全部"] + [t["name"] for t in theater_data]
 popular_movies = get_popular_movies()
+st.write(f"DEBUG: popular_movies 數量 = {len(popular_movies)}")
 
 # --- Gallery ---
 st.title("🎬 台中電影場次整合查詢")
