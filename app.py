@@ -11,10 +11,10 @@ TW_TZ = timezone(timedelta(hours=8))
 st.set_page_config(page_title="台中電影場次查詢", page_icon="🎬", layout="wide")
 
 # --- 取得基礎資料 ---
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=3600)
 def fetch_movies():
     try:
-        r = requests.get(f"{API_BASE}/movies", timeout=10)
+        r = requests.get(f"{API_BASE}/movies", timeout=30)
         return sorted(r.json()) if r.ok else []
     except Exception:
         return []
@@ -22,18 +22,21 @@ def fetch_movies():
 @st.cache_data(ttl=3600)
 def fetch_theaters():
     try:
-        r = requests.get(f"{API_BASE}/theaters", timeout=10)
+        r = requests.get(f"{API_BASE}/theaters", timeout=30)
         return r.json() if r.ok else []
     except Exception:
         return []
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=300)
 def fetch_all_showtimes():
-    try:
-        r = requests.get(f"{API_BASE}/showtimes", params={"limit": 500}, timeout=15)
-        return r.json() if r.ok else []
-    except Exception:
-        return []
+    for attempt in range(3):  # 最多重試 3 次
+        try:
+            r = requests.get(f"{API_BASE}/showtimes", params={"limit": 500}, timeout=30)
+            if r.ok and r.json():
+                return r.json()
+        except Exception:
+            pass
+    return []
 
 @st.cache_data(ttl=86400)
 def fetch_tmdb_info(movie_name):
