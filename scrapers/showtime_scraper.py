@@ -87,12 +87,21 @@ class ShowtimeScraper(BaseMovieScraper):
             status = event.get("status")
             seat_status = "開放購票" if status == "active" else "停止售票"
 
-            self.showtime_results.append({
-                "movie_name": movie_name,
-                "theater_name": theater_name,
-                "date_time": date_time,
-                "format_type": f_type,
-                "language": language,
-                "price": price,
-                "seat_status": seat_status
-            })
+            # 去除重複場次
+            duplicate = any(
+                r["movie_name"] == movie_name and
+                r["date_time"] == date_time and
+                r["format_type"] == f_type and
+                r["language"] == language
+                for r in self.showtime_results
+            )
+            if not duplicate:
+                self.showtime_results.append({
+                    "movie_name": movie_name,
+                    "theater_name": theater_name,
+                    "date_time": date_time,
+                    "format_type": f_type,
+                    "language": language,
+                    "price": price,
+                    "seat_status": seat_status
+                })
