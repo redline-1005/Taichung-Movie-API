@@ -2,6 +2,7 @@
 import streamlit as st
 import requests
 from datetime import datetime, date, timezone, timedelta
+import streamlit.components.v1 as components
 
 API_BASE = "https://taichung-movie-api.onrender.com/api"
 TMDB_API_KEY = "7b09fa8c16707593322979703b11ec48"
@@ -138,7 +139,7 @@ if popular_movies:
         """
 
     gallery_html += "</div>"
-    st.markdown(gallery_html, unsafe_allow_html=True)
+    components.html(gallery_html, height=260, scrolling=False)
 
     # 點選 gallery 後顯示電影詳情
     selected_gallery_movie = st.selectbox(
