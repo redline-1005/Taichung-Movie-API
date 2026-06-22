@@ -107,6 +107,9 @@ else:
         else:
             st.markdown(f"### 🏟 {theater}")
 
+        if "新光影城" in theater:
+            st.caption("⚠️ 新光影城網站會有不穩定之現象，若無法開啟請稍後再試")
+
         movies_in_theater = sorted(set(r["movie_name"] for r in theater_results))
         for movie in movies_in_theater:
             movie_results = [r for r in theater_results if r["movie_name"] == movie]
