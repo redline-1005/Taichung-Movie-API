@@ -120,10 +120,11 @@ if popular_movies:
                     st.write(info["overview"])
 
         today_tw = datetime.now(TW_TZ).date()
+        now_tw = datetime.now(TW_TZ).replace(tzinfo=None)
         movie_shows = [
             s for s in all_showtimes_data
             if s["movie_name"] == selected
-            and datetime.fromisoformat(s["date_time"]).date() >= today_tw
+            and datetime.fromisoformat(s["date_time"]) >= now_tw
         ]
         movie_shows.sort(key=lambda x: x["date_time"])
 
