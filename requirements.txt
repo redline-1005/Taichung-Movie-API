@@ -4,4 +4,4 @@ sqlmodel
 playwright
 fake-useragent
 requests
-streamlit
+pandas
